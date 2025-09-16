@@ -1,4 +1,11 @@
-{ pkgs, ... }: {
+{ pkgs, ... }: let
+  oidcMod = pkgs.fetchFromGitHub {
+    owner = "RISE-GmbH";
+    repo = "icingaweb2-module-oidc";
+    rev = "v0.6.7";
+    hash = "sha256-LjzInvfKwXR6Ptt96RAJJGcrA0H1cziR88MqtSpK9Xw=";
+  };
+in {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -33,11 +40,16 @@
 INSERT INTO icingaweb_user VALUES ('icingaadmin', 1, '$2y$05$bZFogtHKoarFf3QMSLs8.eBfgDdSBA/ULt0SEQOEIkcg0/gvs9MuW', NOW(), NOW());
 '');
       }
+      {
+        name = "oidc";
+        schema = "${oidcMod}/schema/mysql.schema.sql";
+      }
     ];
     ensureUsers = [
       {
         name = "icingaweb2";
         ensurePermissions."iw2.*" = "ALL PRIVILEGES";
+        ensurePermissions."oidc.*" = "ALL PRIVILEGES";
       }
     ];
   };
@@ -51,20 +63,31 @@ INSERT INTO icingaweb_user VALUES ('icingaadmin', 1, '$2y$05$bZFogtHKoarFf3QMSLs
       backend = "db";
       resource = "iw2";
     };
-    resources.iw2 = {
-      type = "db";
-      db = "mysql";
-      host = "localhost";
-      dbname = "iw2";
-      username = "icingaweb2";
-      charset = "utf8";
+    resources = let
+      db = name: {
+        type = "db";
+        db = "mysql";
+        host = "localhost";
+        dbname = name;
+        username = "icingaweb2";
+        charset = "utf8";
+      };
+    in {
+      iw2 = db "iw2";
+      oidc = db "oidc";
     };
     roles.adm = {
       users = "icingaadmin";
       permissions = "*";
     };
+    modulePackages.oidc = oidcMod;
   };
 
   services.nginx.virtualHosts."iw2.aklimov.net-dump.de".enableACME = true;
   services.nginx.virtualHosts."iw2.aklimov.net-dump.de".forceSSL = true;
+
+  environment.etc."icingaweb2/modules/oidc/config.ini".text = ''
+[backend]
+resource = "oidc"
+'';
 }
