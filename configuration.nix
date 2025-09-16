@@ -98,7 +98,7 @@ INSERT INTO icingaweb_user VALUES ('icingaadmin', 1, '$2y$05$bZFogtHKoarFf3QMSLs
       };
       game = {
         users = "*";
-        permissions = "module/fourcolors";
+        permissions = "module/fourcolors,module/whoarewe";
       };
     };
     modulePackages = {
@@ -108,6 +108,12 @@ INSERT INTO icingaweb_user VALUES ('icingaadmin', 1, '$2y$05$bZFogtHKoarFf3QMSLs
         repo = "icingaweb2-module-fourcolors";
         rev = "8802dee00be542840e3e09c52501c0f4cfb61371";
         hash = "sha256-WxcFVyTMPP4c45Om5PzALEpB88+XUQKeTMj+vVUXwvA=";
+      };
+      whoarewe = pkgs.fetchFromGitHub {
+        owner = "Al2Klimov";
+        repo = "icingaweb2-module-whoarewe";
+        rev = "06aaf814e8b32ab48e9fc9cb8bd3dbe2022d368e";
+        hash = "sha256-gf703IRQlSsHXcqAGDQMATknCWfhMerg789J08ZSqb0=";
       };
     };
   };
