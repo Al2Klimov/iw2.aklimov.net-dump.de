@@ -8,7 +8,7 @@
   boot.tmp.cleanOnBoot = true;
 
   networking.firewall.enable = true;
-  networking.firewall.allowedTCPPorts = [ 80 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   system.autoUpgrade.enable = true;
   system.autoUpgrade.allowReboot = true;
@@ -17,6 +17,11 @@
 
   services.openssh.enable = true;
   users.users.root.openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBIroHYGSRaRNFxlK90SS0aHwWjEME30pK5J1N/V1w6a" ];
+
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "aklimov@icinga.com";
+  };
 
   services.mysql = with pkgs; {
     enable = true;
@@ -39,6 +44,7 @@ INSERT INTO icingaweb_user VALUES ('icingaadmin', 1, '$2y$05$bZFogtHKoarFf3QMSLs
 
   services.icingaweb2 = {
     enable = true;
+    virtualHost = "iw2.aklimov.net-dump.de";
     generalConfig.global.config_resource = "iw2";
     modules.monitoring.enable = false;
     authentications.mysql = {
@@ -58,4 +64,7 @@ INSERT INTO icingaweb_user VALUES ('icingaadmin', 1, '$2y$05$bZFogtHKoarFf3QMSLs
       permissions = "*";
     };
   };
+
+  services.nginx.virtualHosts."iw2.aklimov.net-dump.de".enableACME = true;
+  services.nginx.virtualHosts."iw2.aklimov.net-dump.de".forceSSL = true;
 }
