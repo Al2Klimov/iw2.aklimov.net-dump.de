@@ -1,0 +1,5 @@
+--- a/library/Oidc/FileHelper.php
++++ b/library/Oidc/FileHelper.php
+@@ -40,1 +40,1 @@
+-        if (strpos(realpath($filePath), $this->path) !== false && file_exists($filePath)) {
++        if (file_exists($filePath)) {

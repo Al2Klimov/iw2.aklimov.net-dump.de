@@ -1,9 +1,15 @@
 { pkgs, ... }: let
-  oidcMod = pkgs.fetchFromGitHub {
-    owner = "RISE-GmbH";
-    repo = "icingaweb2-module-oidc";
-    rev = "v0.6.7";
-    hash = "sha256-LjzInvfKwXR6Ptt96RAJJGcrA0H1cziR88MqtSpK9Xw=";
+  oidcMod = pkgs.stdenvNoCC.mkDerivation {
+    name = "icingaweb2-module-oidc";
+    src = pkgs.fetchFromGitHub {
+      owner = "RISE-GmbH";
+      repo = "icingaweb2-module-oidc";
+      rev = "v0.6.7";
+      hash = "sha256-LjzInvfKwXR6Ptt96RAJJGcrA0H1cziR88MqtSpK9Xw=";
+    };
+    # https://github.com/RISE-GmbH/icingaweb2-module-oidc/pull/12
+    patches = [ ./oidc-12.patch ];
+    installPhase = "mkdir -p $out; cp -ra * $out";
   };
 in {
   imports = [
@@ -59,9 +65,16 @@ INSERT INTO icingaweb_user VALUES ('icingaadmin', 1, '$2y$05$bZFogtHKoarFf3QMSLs
     virtualHost = "iw2.aklimov.net-dump.de";
     generalConfig.global.config_resource = "iw2";
     modules.monitoring.enable = false;
-    authentications.mysql = {
-      backend = "db";
-      resource = "iw2";
+    authentications = {
+      mysql = {
+        backend = "db";
+        resource = "iw2";
+      };
+      GitLab = {
+        backend = "oidc";
+        provider_id = "1";
+        disabled = "1";
+      };
     };
     resources = let
       db = name: {
@@ -77,7 +90,7 @@ INSERT INTO icingaweb_user VALUES ('icingaadmin', 1, '$2y$05$bZFogtHKoarFf3QMSLs
       oidc = db "oidc";
     };
     roles.adm = {
-      users = "icingaadmin";
+      users = "icingaadmin,Alexander A. Klimov";
       permissions = "*";
     };
     modulePackages.oidc = oidcMod;
@@ -99,4 +112,6 @@ INSERT INTO icingaweb_user VALUES ('icingaadmin', 1, '$2y$05$bZFogtHKoarFf3QMSLs
 [backend]
 resource = "oidc"
 '';
+
+  environment.etc."icingaweb2/modules/oidc/files/gitlab.png".source = "${pkgs.gitlab}/share/gitlab/app/assets/images/gitlab_logo.png";
 }
