@@ -60,6 +60,8 @@ INSERT INTO icingaweb_user VALUES ('icingaadmin', 1, '$2y$05$bZFogtHKoarFf3QMSLs
     ];
   };
 
+  services.redis.enable = true;
+
   services.icingaweb2 = {
     enable = true;
     virtualHost = "iw2.aklimov.net-dump.de";
@@ -89,11 +91,25 @@ INSERT INTO icingaweb_user VALUES ('icingaadmin', 1, '$2y$05$bZFogtHKoarFf3QMSLs
       iw2 = db "iw2";
       oidc = db "oidc";
     };
-    roles.adm = {
-      users = "icingaadmin,Alexander A. Klimov";
-      permissions = "*";
+    roles = {
+      adm = {
+        users = "icingaadmin,Alexander A. Klimov";
+        permissions = "*";
+      };
+      game = {
+        users = "*";
+        permissions = "module/fourcolors";
+      };
     };
-    modulePackages.oidc = oidcMod;
+    modulePackages = {
+      oidc = oidcMod;
+      fourcolors = pkgs.fetchFromGitHub {
+        owner = "Al2Klimov";
+        repo = "icingaweb2-module-fourcolors";
+        rev = "8802dee00be542840e3e09c52501c0f4cfb61371";
+        hash = "sha256-WxcFVyTMPP4c45Om5PzALEpB88+XUQKeTMj+vVUXwvA=";
+      };
+    };
   };
 
   services.nginx.virtualHosts."iw2.aklimov.net-dump.de".enableACME = true;
