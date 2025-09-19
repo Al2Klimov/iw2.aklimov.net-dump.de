@@ -13,6 +13,12 @@
   networking.hostName = "aklimov-nixos";
   system.stateVersion = "23.11";
   boot.tmp.cleanOnBoot = true;
+  nix.settings.cores = 1;
+
+  swapDevices = [ {
+    device = "/var/lib/swapfile";
+    size = 1024;
+  } ];
 
   networking.firewall.enable = true;
   networking.firewall.allowedTCPPorts = [ 80 443 ];
