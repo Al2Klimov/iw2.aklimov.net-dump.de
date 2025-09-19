@@ -2,6 +2,12 @@
   imports = [
     ./hardware-configuration.nix
     ./iw2.nix
+    ./mergeconflict-tgbot.nix
+
+    "${builtins.fetchTarball {
+      url = "https://github.com/ryantm/agenix/archive/564595d0ad4be7277e07fa63b5a991b3c645655d.tar.gz";
+      sha256 = "01dhrghwa7zw93cybvx4gnrskqk97b004nfxgsys0736823956la";
+    }}/modules/age.nix"
   ];
 
   networking.hostName = "aklimov-nixos";
