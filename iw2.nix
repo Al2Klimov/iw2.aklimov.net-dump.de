@@ -4,8 +4,8 @@
     src = pkgs.fetchFromGitHub {
       owner = "RISE-GmbH";
       repo = "icingaweb2-module-oidc";
-      rev = "v0.6.7";
-      hash = "sha256-LjzInvfKwXR6Ptt96RAJJGcrA0H1cziR88MqtSpK9Xw=";
+      rev = "v0.6.9";
+      hash = "sha256-uIPSplaKTQzo/k/WSQHdtEtQyP2te2DHQFp8PpOEfvk=";
     };
     # https://github.com/RISE-GmbH/icingaweb2-module-oidc/pull/12
     patches = [ ./oidc-12.patch ];
