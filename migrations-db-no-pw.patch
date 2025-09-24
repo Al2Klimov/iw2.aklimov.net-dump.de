@@ -1,0 +1,5 @@
+--- a/modules/setup/library/Setup/Utils/DbTool.php
++++ b/modules/setup/library/Setup/Utils/DbTool.php
+@@ -184,2 +183,0 @@
+-        } elseif (! isset($this->config['password'])) {
+-            throw new ConfigurationError('Can\'t connect to database server without a password');
