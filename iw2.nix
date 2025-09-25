@@ -4,11 +4,9 @@
     src = pkgs.fetchFromGitHub {
       owner = "RISE-GmbH";
       repo = "icingaweb2-module-oidc";
-      rev = "v0.6.9";
-      hash = "sha256-uIPSplaKTQzo/k/WSQHdtEtQyP2te2DHQFp8PpOEfvk=";
+      rev = "v0.7.0";
+      hash = "sha256-lYQkB19NAwrVlvdS0naUqiGQ6hv9mapr3eu4K2egy18=";
     };
-    # https://github.com/RISE-GmbH/icingaweb2-module-oidc/pull/12
-    patches = [ ./oidc-12.patch ];
     installPhase = "mkdir -p $out; cp -ra * $out";
   };
 in {
