@@ -1,13 +1,9 @@
 { pkgs, ... }: let
-  oidcMod = pkgs.stdenvNoCC.mkDerivation {
-    name = "icingaweb2-module-oidc";
-    src = pkgs.fetchFromGitHub {
-      owner = "RISE-GmbH";
-      repo = "icingaweb2-module-oidc";
-      rev = "v0.7.0";
-      hash = "sha256-lYQkB19NAwrVlvdS0naUqiGQ6hv9mapr3eu4K2egy18=";
-    };
-    installPhase = "mkdir -p $out; cp -ra * $out";
+  oidcMod = pkgs.fetchFromGitHub {
+    owner = "RISE-GmbH";
+    repo = "icingaweb2-module-oidc";
+    rev = "v0.7.0";
+    hash = "sha256-lYQkB19NAwrVlvdS0naUqiGQ6hv9mapr3eu4K2egy18=";
   };
 in {
   security.acme = {
