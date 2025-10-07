@@ -1,6 +1,7 @@
 { ... }: {
   imports = [
     ./hardware-configuration.nix
+    ./icinga2.nix
     ./iw2.nix
     ./mergeconflict-tgbot.nix
 
