@@ -29,6 +29,17 @@
     };
     wantedBy = [ "multi-user.target" ];
     path = [
+      systemd
+      (rustPlatform.buildRustPackage {
+        name = "check_rungrep";
+        src = fetchFromGitHub {
+          owner = "Al2Klimov";
+          repo = "check_rungrep";
+          rev = "v0.1.0";
+          hash = "sha256-rjCmEcIDKPvzOl7+LyYWGcfhDOorXrGw+3OL8v561hg=";
+        };
+        cargoHash = "sha256-jw58qtovME+/gzkcIyx4xlb1gmqDwt8/UGQePSXbGrs=";
+      })
       (writeShellScriptBin "env_notify_telegram" ''
 export ENTG_TOKEN="$(< ${config.age.secrets.ENTG_TOKEN.path})"
 exec ${rustPlatform.buildRustPackage {
