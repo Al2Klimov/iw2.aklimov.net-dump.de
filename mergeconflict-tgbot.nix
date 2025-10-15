@@ -12,6 +12,7 @@
   };
 
   systemd.services.mergeconflict-tgbot = {
+    requires = [ "network-online.target" ];
     serviceConfig = {
       StateDirectory = "mergeconflict-tgbot";
       StateDirectoryMode = "0750";
