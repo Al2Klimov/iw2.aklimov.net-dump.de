@@ -18,6 +18,7 @@
       StateDirectoryMode = "0750";
       User = "mergeconflict-tgbot";
       WorkingDirectory = "/var/lib/mergeconflict-tgbot";
+      ExecStartPre = "${pkgs.coreutils}/bin/sleep 69";
       ExecStart = with pkgs; writeShellScript "" ''
 export MERGECONFLICT_TGBOT_TGTOKEN="$(< ${config.age.secrets.MERGECONFLICT_TGBOT_TGTOKEN.path})"
 exec ${rustPlatform.buildRustPackage {
