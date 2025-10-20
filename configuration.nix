@@ -13,6 +13,7 @@
 
   networking.hostName = "aklimov-nixos";
   system.stateVersion = "23.11";
+  time.timeZone = "Europe/Berlin";
   boot.tmp.cleanOnBoot = true;
   nix.settings.cores = 1;
 
@@ -24,8 +25,12 @@
   networking.firewall.enable = true;
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
-  system.autoUpgrade.enable = true;
-  system.autoUpgrade.allowReboot = true;
+  system.autoUpgrade = {
+    enable = true;
+    dates = "9:35";
+    allowReboot = true;
+  };
+
   nix.gc.automatic = true;
   nix.gc.options = "--delete-older-than 7d";
 
