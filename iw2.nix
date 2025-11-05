@@ -115,5 +115,12 @@ INSERT INTO icingaweb_user VALUES ('icingaadmin', 1, '$2y$05$bZFogtHKoarFf3QMSLs
 resource = "oidc"
 '';
 
-  environment.etc."icingaweb2/modules/oidc/files/gitlab.png".source = "${pkgs.gitlab}/share/gitlab/app/assets/images/gitlab_logo.png";
+  environment.etc."icingaweb2/modules/oidc/files/gitlab.png".source = "${pkgs.stdenvNoCC.mkDerivation {
+    name = "gitlab_logo";
+    phases = [ "installPhase" ];
+    installPhase = ''
+mkdir -p $out
+cp ${pkgs.gitlab.src}/app/assets/images/gitlab_logo.png $out/
+'';
+}}/gitlab_logo.png";
 }
