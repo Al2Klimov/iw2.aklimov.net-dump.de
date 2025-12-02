@@ -41,10 +41,6 @@ INSERT INTO icingaweb_user VALUES ('icingaadmin', 1, '$2y$05$bZFogtHKoarFf3QMSLs
         ensurePermissions."oidc.*" = "ALL PRIVILEGES";
         ensurePermissions."todolist.*" = "ALL PRIVILEGES";
       }
-      {
-        name = "icinga-todolist";
-        ensurePermissions."todolist.*" = "ALL PRIVILEGES";
-      }
     ];
   };
 

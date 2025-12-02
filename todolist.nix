@@ -1,26 +1,16 @@
 { config, pkgs, ... }: {
   age.secrets.todolist-config-ini = {
     file = ./todolist/config.ini.age;
-    group = "icingaweb2";
-    mode = "440";
+    owner = "icingaweb2";
   };
 
   age.secrets.todolist-providers-ini = {
     file = ./todolist/providers.ini.age;
-    group = "icingaweb2";
-    mode = "440";
+    owner = "icingaweb2";
   };
 
   environment.etc."icingaweb2/modules/todolist/config.ini".source = config.age.secrets.todolist-config-ini.path;
   environment.etc."icingaweb2/modules/todolist/providers.ini".source = config.age.secrets.todolist-providers-ini.path;
-
-  users.groups.icinga-todolist = { };
-
-  users.users.icinga-todolist = {
-    isSystemUser = true;
-    group = "icinga-todolist";
-    extraGroups = [ "icingaweb2" ];
-  };
 
   systemd.services.icinga-todolist = with pkgs; {
     requires = [ "network-online.target" ];
@@ -43,7 +33,7 @@ ln -s ${icingaweb2-thirdparty} $out/vendor
       ExecStart = "${icingaweb2}/bin/icingacli todolist daemon run";
       Restart = "on-failure";
       RestartSec = "5";
-      User = "icinga-todolist";
+      User = "icingaweb2";
       WorkingDirectory = "/tmp";
     };
     wantedBy = [ "multi-user.target" ];
