@@ -1,8 +1,9 @@
-{ ... }: {
+{ pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
     ./icinga2.nix
     ./iw2.nix
+    ./todolist.nix
     ./mergeconflict-tgbot.nix
 
     "${builtins.fetchTarball {
@@ -36,4 +37,6 @@
 
   services.openssh.enable = true;
   users.users.root.openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBIroHYGSRaRNFxlK90SS0aHwWjEME30pK5J1N/V1w6a" ];
+
+  environment.systemPackages = [ pkgs.git ];
 }

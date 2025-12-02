@@ -5,6 +5,10 @@
     rev = "v0.7.0";
     hash = "sha256-lYQkB19NAwrVlvdS0naUqiGQ6hv9mapr3eu4K2egy18=";
   };
+  todolistMod = builtins.fetchGit {
+    url = "file:///todolist.git";
+    rev = "4b68d8bb6416f2df9056652428395351456686bc";
+  };
 in {
   security.acme = {
     acceptTerms = true;
@@ -25,12 +29,21 @@ INSERT INTO icingaweb_user VALUES ('icingaadmin', 1, '$2y$05$bZFogtHKoarFf3QMSLs
         name = "oidc";
         schema = "${oidcMod}/schema/mysql.schema.sql";
       }
+      {
+        name = "todolist";
+        schema = "${todolistMod}/schema/mysql.schema.sql";
+      }
     ];
     ensureUsers = [
       {
         name = "icingaweb2";
         ensurePermissions."iw2.*" = "ALL PRIVILEGES";
         ensurePermissions."oidc.*" = "ALL PRIVILEGES";
+        ensurePermissions."todolist.*" = "ALL PRIVILEGES";
+      }
+      {
+        name = "icinga-todolist";
+        ensurePermissions."todolist.*" = "ALL PRIVILEGES";
       }
     ];
   };
@@ -60,11 +73,12 @@ INSERT INTO icingaweb_user VALUES ('icingaadmin', 1, '$2y$05$bZFogtHKoarFf3QMSLs
         host = "localhost";
         dbname = name;
         username = "icingaweb2";
-        charset = "utf8";
+        charset = "utf8mb4";
       };
     in {
       iw2 = db "iw2";
       oidc = db "oidc";
+      todolist = db "todolist";
     };
     roles = {
       adm = {
@@ -78,6 +92,7 @@ INSERT INTO icingaweb_user VALUES ('icingaadmin', 1, '$2y$05$bZFogtHKoarFf3QMSLs
     };
     modulePackages = {
       oidc = oidcMod;
+      todolist = todolistMod;
       fourcolors = pkgs.fetchFromGitHub {
         owner = "Al2Klimov";
         repo = "icingaweb2-module-fourcolors";
