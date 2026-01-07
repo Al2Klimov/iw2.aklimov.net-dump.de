@@ -26,10 +26,10 @@ exec ${rustPlatform.buildRustPackage {
   src = fetchFromGitHub {
     owner = "Al2Klimov";
     repo = "mergeconflict-tgbot";
-    rev = "d8597c55ebd8a0b4b2e813f305b257f5753bdd34";
-    hash = "sha256-4hMUhj6T89CUzGkGprsqVfX8IlsET6FCwvAQLlm4hNI=";
+    rev = "f5934f5315c6db9e416a690c2518b7b7535d9444";
+    hash = "sha256-K2yKCbdYXreifUm92+O5X03spgZIdgt/vf1Ghty2HiY=";
   };
-  cargoHash = "sha256-1Vnj52lTbk2m2fihlj0sCpkf0pBxhMt4kuT2tBJaBqo=";
+  cargoHash = "sha256-B4frhB/nOUYGDPtO17aooDjm7yFyGyzC1Hz4ifRm9TI=";
   nativeBuildInputs = [ pkg-config ];
   buildInputs = [ openssl ];
 }}/bin/mergeconflict-tgbot
