@@ -2,8 +2,8 @@
   oidcMod = pkgs.fetchFromGitHub {
     owner = "RISE-GmbH";
     repo = "icingaweb2-module-oidc";
-    rev = "v0.7.2";
-    hash = "sha256-idfMuNpDxqieWWrKSR4jJSNHIcyMfe+dCP8cw+cPVtg=";
+    rev = "v0.7.3";
+    hash = "sha256-tD1YPOobHqcuN6ntedHdidRHmjpBr4A4LJyhHCqfu3E=";
   };
 in {
   security.acme = {
