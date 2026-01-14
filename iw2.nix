@@ -1,4 +1,4 @@
-{ pkgs, ... }: let
+{ lib, pkgs, ... }: let
   oidcMod = pkgs.fetchFromGitHub {
     owner = "RISE-GmbH";
     repo = "icingaweb2-module-oidc";
@@ -96,11 +96,15 @@ INSERT INTO icingaweb_user VALUES ('icingaadmin', 1, '$2y$05$bZFogtHKoarFf3QMSLs
   services.nginx.virtualHosts."iw2.aklimov.net-dump.de".enableACME = true;
   services.nginx.virtualHosts."iw2.aklimov.net-dump.de".forceSSL = true;
 
+  services.phpfpm.pools.icingaweb2.phpPackage = lib.mkForce (
+    pkgs.php.withExtensions (
+      { enabled, all }: builtins.filter (e: e != all.opcache) enabled
+    )
+  );
+
   nixpkgs.overlays = [
     (_: prev: { icingaweb2 = prev.icingaweb2.overrideAttrs (_: {
       patches = [
-        ./opcache_reset.patch
-
         # https://github.com/Icinga/icingaweb2/issues/5427
         ./migrations-db-no-pw.patch
       ];
