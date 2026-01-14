@@ -97,16 +97,13 @@ INSERT INTO icingaweb_user VALUES ('icingaadmin', 1, '$2y$05$bZFogtHKoarFf3QMSLs
   services.nginx.virtualHosts."iw2.aklimov.net-dump.de".forceSSL = true;
 
   nixpkgs.overlays = [
-    (_: prev: { icingaweb2 = prev.icingaweb2.overrideAttrs (old: {
+    (_: prev: { icingaweb2 = prev.icingaweb2.overrideAttrs (_: {
       patches = [
         ./opcache_reset.patch
 
         # https://github.com/Icinga/icingaweb2/issues/5427
         ./migrations-db-no-pw.patch
       ];
-
-      # https://github.com/NixOS/nixpkgs/pull/380065
-      installPhase = old.installPhase + "\ncp -ra schema $out";
     }); })
   ];
 
