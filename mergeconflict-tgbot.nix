@@ -26,8 +26,8 @@ exec ${rustPlatform.buildRustPackage {
   src = fetchFromGitHub {
     owner = "Al2Klimov";
     repo = "mergeconflict-tgbot";
-    rev = "e1c0ff4d8bc401888a87fe26dd6aa87b2baa3cdb";
-    hash = "sha256-Jbb/FJfJhZDC7sDay4zjYpQAL5OvlE3LxGK7f0rT0lc=";
+    rev = "fcea83607b1417a569e7f792fd2fd7e78d2bae07";
+    hash = "sha256-XBOe3/ZotTbUUomQ43CewPD5sg5w9yTofEbFFn3iT78=";
   };
   cargoHash = "sha256-Hp3lDF4tpL15Ct3ocEw0up3xZp3TTGevXvxSvL4mSgg=";
   nativeBuildInputs = [ pkg-config ];
