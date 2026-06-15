@@ -4,6 +4,7 @@
     ./icinga2.nix
     ./iw2.nix
     ./mergeconflict-tgbot.nix
+    ./vpn.nix
 
     "${builtins.fetchTarball {
       url = "https://github.com/ryantm/agenix/archive/564595d0ad4be7277e07fa63b5a991b3c645655d.tar.gz";
@@ -22,8 +23,11 @@
     size = 1024;
   } ];
 
-  networking.firewall.enable = true;
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 80 443 ];
+    allowedUDPPorts = [ 443 ];
+  };
 
   system.autoUpgrade = {
     enable = true;
