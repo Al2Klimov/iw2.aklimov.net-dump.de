@@ -26,7 +26,7 @@
   networking.firewall = {
     enable = true;
     allowedTCPPorts = [ 80 443 ];
-    allowedUDPPorts = [ 443 ];
+    allowedUDPPorts = [ 334 443 ];
   };
 
   system.autoUpgrade = {

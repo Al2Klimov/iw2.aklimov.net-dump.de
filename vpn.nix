@@ -16,6 +16,25 @@
         }
       ];
     };
+    interfaces.wg1 = {
+      listenPort = 334;
+      privateKeyFile = config.age.secrets.wg-privkey.path;
+      ips = [ "192.168.23.254/24" ];
+      peers = [
+        { # WS
+          publicKey = "7OXk1+FDoBMfQScE1Z6Ro9syyUhwuk9jYZSGOTTONXA=";
+          allowedIPs = [ "192.168.23.42/32" ];
+        }
+        { # Server
+          publicKey = "D3BRcC7Ln6RJuMuolUhTOgbhDVHbj+hoGhl+KAFJDUU=";
+          allowedIPs = [ "192.168.23.7/32" ];
+        }
+        { # VM
+          publicKey = "ZHcZ3a3ATeKR4zVfWxrb7PWTBiKi8yE9sUqNMdPID1k=";
+          allowedIPs = [ "192.168.23.13/32" ];
+        }
+      ];
+    };
   };
 
   networking.nat = {
