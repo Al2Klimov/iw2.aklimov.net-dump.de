@@ -14,7 +14,18 @@
   systemd.services.icinga2 = with pkgs; {
     requires = [ "network-online.target" ];
     serviceConfig = {
-      ExecStart = "+${icinga2}/bin/icinga2 daemon --close-stdio -c ${./icinga2.conf} -DPluginDir=${monitoring-plugins}/bin";
+      ExecStart = "+${icinga2.override {
+        # https://github.com/Icinga/icinga2/issues/11004
+        withOtel = false;
+
+        # While on it, save build time:
+        withMysql = false;
+        withPostgresql = false;
+        withCompat = false;
+        withLivestatus = false;
+        withPerfdata = false;
+        withIcingadb = false;
+      }}/bin/icinga2 daemon --close-stdio -c ${./icinga2.conf} -DPluginDir=${monitoring-plugins}/bin";
       Type = "notify";
       NotifyAccess = "all";
       KillMode = "mixed";
