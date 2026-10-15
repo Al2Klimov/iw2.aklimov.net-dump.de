@@ -21,7 +21,7 @@
 
   swapDevices = [ {
     device = "/var/lib/swapfile";
-    size = 1024;
+    size = 2048;
   } ];
 
   networking.firewall = {
