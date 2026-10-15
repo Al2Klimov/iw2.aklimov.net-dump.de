@@ -16,6 +16,7 @@
   system.stateVersion = "23.11";
   time.timeZone = "Europe/Berlin";
   boot.tmp.cleanOnBoot = true;
+  nix.settings.max-jobs = 1;
   nix.settings.cores = 1;
 
   swapDevices = [ {
